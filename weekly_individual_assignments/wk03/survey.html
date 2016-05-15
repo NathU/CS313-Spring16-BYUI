@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Week 03</title>
+		<link rel="stylesheet" href="./resources/CalendarView-master/stylesheets/calendarview.css">
+		<link rel="stylesheet" href="./resources/week03styles.css">
+    <style>
+      body {
+        font-family: Trebuchet MS;
+      }
+      div.calendar {
+        max-width: 340px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      div.calendar table {
+        width: 100%;
+      }
+      input.dateField {
+          background: #ffffff;
+		  background-image: -webkit-linear-gradient(top, #ffffff, #c7c7c7);
+		  background-image: -moz-linear-gradient(top, #ffffff, #c7c7c7);
+		  background-image: -ms-linear-gradient(top, #ffffff, #c7c7c7);
+		  background-image: -o-linear-gradient(top, #ffffff, #c7c7c7);
+		  background-image: linear-gradient(to bottom, #ffffff, #c7c7c7);
+		  -webkit-border-radius: 6;
+		  -moz-border-radius: 6;
+		  border-radius: 6px;
+		  font-family: 'Goudy Old Style', Garamond, 'Big Caslon', 'Times New Roman', serifw;
+		  color: #000000;
+		  font-size: 15px;
+		  padding: 6px 12px 6px 12px;
+		  border: none;
+		  text-decoration: none;
+		  line-height: 150%;
+      }
+      div#popupDateField:hover {
+        background-color: #cde;
+        cursor: pointer;
+		
+      }
+
+    </style>
+    <script src="./resources/CalendarView-master/javascripts/prototype.js"></script>
+    <script src="./resources/CalendarView-master/javascripts/calendarview.js"></script>
+	<script src="./resources/surveyScripts.js"></script>
+    <script>
+      function setupCalendars() {
+        // Popup Calendar
+        Calendar.setup(
+          {
+            dateField: 'popupDateField',
+            triggerElement: 'popupDateField'
+          }
+        )
+      }
+
+      Event.observe(window, 'load', function() { setupCalendars() })
+    </script>
+    </head>
+	
+    <body>
+		<small style="margin-bottom: 0px">Week 03: Survey Assignment</small>
+		<div class="survey_module">
+        <form method="post" action="./results.php">
+		<h2 style="margin-top: 0px">Log a Temple Visit</h2>
+            
+			<div id="ordinances" style="visibility: hidden; position: absolute;">
+				<input type="radio" id="B" name="ordinance" value="Baptism">
+				<input type="radio" id="C" name="ordinance" value="Confirmation">
+				<input type="radio" id="W" name="ordinance" value="Washing & Anointing">
+				<input type="radio" id="E" name="ordinance" value="Endowment">
+				<input type="radio" id="SC" name="ordinance" value="Child's Sealing">
+				<input type="radio" id="SS" name="ordinance" value="Spousal Sealing">
+            </div>
+			
+			<div id="image_containter"> <!-- TODO: six clickable images -->
+				<img id="B-image" src="./resources/waves.png" alt="Smiley face" height="64" width="64" onclick="picClick('B')">
+				<img id="C-image" src="./resources/flame.png" alt="Smiley face" height="64" width="64" onclick="picClick('C')">
+				<img id="W-image" src="./resources/oil.png" alt="Smiley face" height="64" width="64" onclick="picClick('W')">
+				<img id="E-image" src="./resources/altar.png" alt="Smiley face" height="64" width="64" onclick="picClick('E')">
+				<img id="SC-image" src="./resources/child_parent_color.png" alt="Smiley face" height="64" width="64" onclick="picClick('SC')">
+				<img id="SS-image" src="./resources/wedding1.png" alt="Smiley face" height="64" width="64" onclick="picClick('SS')">
+				<br> 
+            </div>
+			<div id="visit_summary" style="display: inline;"> Performed ____________ for:</div>
+			<input id ="headCount" type="number" name="headCount" min="1" max="15" value="1">
+
+            <div>
+			<br>Notes:<br>
+                <textarea id="note" name="note" placeholder="optional: enter any notes about your visit" rows="5" cols="40"></textarea> 
+				
+            </div>
+			<br>
+			<div> <!-- Calendar courtesy of jsmecham at github: https://github.com/jsmecham/calendarview -->
+				  <img src="./resources/calendar2.png" alt="Smiley face" height="24" width="24">
+				  <input type="button" id="popupDateField" class="dateField" value="select a date" onblur="fillDate()">
+				  <input id="date_container" name="date" style="visibility: hidden" value="">
+			</div>
+			
+            <div>
+				<br>
+				<div style="text-align: center;">
+				<input class="coolButton" id="Clear_it" type="button" name="cancel" value="Clear" onclick="resetForm()">
+				<input class="coolButton" id="Log_it" type="submit" name="submit" value="Log It!" disabled="true">
+				</div>
+				<br>
+				<div style="text-align: center;">
+				<input class="coolButton" id="View_Log" type="submit" name="submit" value="View Visit Log">
+				</div>
+			</div>
+        </form>
+		</div>
+	</body>
+</html>
