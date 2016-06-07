@@ -39,16 +39,18 @@
 		</div>
 		</a>
 		
-		<!-- Assignments -->
+		<!-- Temple Tracker Project -->
+		<a href="./tt_login.php">
 		<div class="box_O_stuff">
 			<h2> Project
-			<br>- Nothing here yet...
-			<br>
+			<br>Temple Tracker helps you keep track of your temple attendance.
+			
 			<br>
 			<br>
 			<br>
 			</h2>
 		</div>
+		</a>
 		
 	</div>
 	

@@ -1,1 +1,109 @@
-db_design
+--------------------------------------
+Create database file:
+--------------------------------------
+CREATE DATABASE IF NOT EXISTS templeTracker;
+
+USE templeTracker;
+
+GRANT EXECUTE
+    ON templeTracker.*
+    TO 'root'@'localhost' IDENTIFIED BY '';
+
+
+---------------------------------------
+structure database file:
+---------------------------------------
+USE templeTracker;
+
+DROP TABLE IF EXISTS user_table;
+DROP TABLE IF EXISTS group_table;
+DROP TABLE IF EXISTS visit_table;
+
+
+
+CREATE TABLE IF NOT EXISTS user_table(
+    user_id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	email VARCHAR(32) NOT NULL UNIQUE,
+	pass VARCHAR(16) NOT NULL,
+	settings VARCHAR(128),
+	user_info VARCHAR(128),
+	group_list TEXT,
+	CONSTRAINT email_must_be_unique UNIQUE(email)
+);
+
+CREATE TABLE IF NOT EXISTS group_table(
+    group_id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	administrator INT UNSIGNED NOT NULL, 
+	member_list TEXT,
+	invite_list TEXT,
+	create_date DATETIME NOT NULL,
+	end_date DATETIME,
+	CONSTRAINT admin_to_userID_constraint FOREIGN KEY (administrator) REFERENCES user_table(user_id)
+);
+
+CREATE TABLE IF NOT EXISTS visit_table(    
+	visit_id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	ordinance VARCHAR(2) NOT NULL,
+	visit_date DATETIME NOT NULL,
+	quantity INT UNSIGNED NOT NULL,
+	note TEXT,
+	contributor INT UNSIGNED NOT NULL,
+	CONSTRAINT contributor_to_userID_constraint FOREIGN KEY (contributor) REFERENCES user_table(user_id)
+);
+
+
+---------------------------------------
+"show tables" output:
+---------------------------------------
+mysql> show tables;
++-------------------------+
+| Tables_in_templetracker |
++-------------------------+
+| group_table             |
+| user_table              |
+| visit_table             |
++-------------------------+
+3 rows in set (0.00 sec)
+
+
+---------------------------------------
+description of tables:
+---------------------------------------
+mysql> describe user_table;
++------------+------------------+------+-----+---------+----------------+
+| Field      | Type             | Null | Key | Default | Extra          |
++------------+------------------+------+-----+---------+----------------+
+| user_id    | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| email      | varchar(32)      | NO   | UNI | NULL    |                |
+| pass       | varchar(16)      | NO   |     | NULL    |                |
+| settings   | varchar(128)     | YES  |     | NULL    |                |
+| user_info  | varchar(128)     | YES  |     | NULL    |                |
+| group_list | text             | YES  |     | NULL    |                |
++------------+------------------+------+-----+---------+----------------+
+6 rows in set (0.03 sec)
+
+mysql> describe visit_table;
++-------------+------------------+------+-----+---------+----------------+
+| Field       | Type             | Null | Key | Default | Extra          |
++-------------+------------------+------+-----+---------+----------------+
+| visit_id    | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| ordinance   | varchar(2)       | NO   |     | NULL    |                |
+| visit_date  | datetime         | NO   |     | NULL    |                |
+| quantity    | int(10) unsigned | NO   |     | NULL    |                |
+| note        | text             | YES  |     | NULL    |                |
+| contributor | int(10) unsigned | NO   | MUL | NULL    |                |
++-------------+------------------+------+-----+---------+----------------+
+6 rows in set (0.01 sec)
+
+mysql> describe group_table;
++---------------+------------------+------+-----+---------+----------------+
+| Field         | Type             | Null | Key | Default | Extra          |
++---------------+------------------+------+-----+---------+----------------+
+| group_id      | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| administrator | int(10) unsigned | NO   | MUL | NULL    |                |
+| member_list   | text             | YES  |     | NULL    |                |
+| invite_list   | text             | YES  |     | NULL    |                |
+| create_date   | datetime         | NO   |     | NULL    |                |
+| end_date      | datetime         | YES  |     | NULL    |                |
++---------------+------------------+------+-----+---------+----------------+
+6 rows in set (0.01 sec)
